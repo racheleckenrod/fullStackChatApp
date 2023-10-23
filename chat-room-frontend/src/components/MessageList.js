@@ -1,7 +1,7 @@
 import React from "react";
 
 const MessageList = ({messages}) => {
-    const reversedMessages = [...messages].reverse()
+    const reversedMessages = [...messages].reverse();
     return (
         <div>
             <h2>Messages</h2>
@@ -21,7 +21,7 @@ const MessageList = ({messages}) => {
                 ))}
             </ul>
         </div>
-    )
-}
+    );
+};
 
-export default MessageList
+export default MessageList;

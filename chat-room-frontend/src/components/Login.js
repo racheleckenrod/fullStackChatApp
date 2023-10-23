@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-const LoginForm = ({onlogin}) => {
+const LoginForm = ({onLogin}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         const response = await fetch('http://localhost:8000/login', {
             method: 'POST',
@@ -13,11 +13,11 @@ const LoginForm = ({onlogin}) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({username, password}),
-        })
+        });
 
-        const data = await response.json()
+        const data = await response.json();
 
-        onlogin(data.token, data.username)
+        onLogin(data.token, data.username);
     }
 
     return (
@@ -38,7 +38,7 @@ const LoginForm = ({onlogin}) => {
 
             <button type='submit'>Login</button>
         </form>
-    )
-}
+    );
+};
 
-export default LoginForm
+export default LoginForm;

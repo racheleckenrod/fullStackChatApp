@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const MessageInput = ({sendMessage}) => {
-    const [message, setMessage] = useState('')
+    const [message, setMessage] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,5 +19,5 @@ const MessageInput = ({sendMessage}) => {
             <button type="submit">Send</button>
         </form>
     );
-}
+};
  export default MessageInput;

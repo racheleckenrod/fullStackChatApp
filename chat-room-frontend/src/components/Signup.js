@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 const SignupForm = ({onSignup}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('');
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         const response = await fetch('http://localhost:8000/register', {
             method: 'POST',
@@ -14,11 +14,11 @@ const SignupForm = ({onSignup}) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({username, email, password}),
-        })
+        });
 
-        const data = await response.json()
+        const data = await response.json();
 
-        onSignup(data.token, data.username)
+        onSignup(data.token, data.username);
     }
 
     return (
@@ -30,7 +30,7 @@ const SignupForm = ({onSignup}) => {
             onChange={(e) => setUsername(e.target.value)}
             />
 
-<input
+            <input
             type='email'
             placeholder='Email'
             value={email}
@@ -48,7 +48,7 @@ const SignupForm = ({onSignup}) => {
 
             <button type='submit'>Sign Up</button>
         </form>
-    )
-}
+    );
+};
 
-export default SignupForm
+export default SignupForm;

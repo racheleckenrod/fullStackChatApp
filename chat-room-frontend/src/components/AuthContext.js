@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect} from "react";
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
     // state variables
@@ -10,19 +10,19 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         // Retrieve token and username from local storage
-        const storedToken = localStorage.getItem('token')
-        const storedUsername = localStorage.getItem('username')
+        const storedToken = localStorage.getItem('token');
+        const storedUsername = localStorage.getItem('username');
 
         // If a token exsists in local storage, update state variables
         if(storedToken) {
-            setToken(storedToken)
-            setIsAuthenticated(true)
+            setToken(storedToken);
+            setIsAuthenticated(true);
         }
 
         if (storedUsername) {
-            setUsername(storedUsername)
+            setUsername(storedUsername);
         }
-    })
+    });
 
     return (
         <AuthContext.Provider

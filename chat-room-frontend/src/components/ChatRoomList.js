@@ -1,6 +1,6 @@
 import React from "react";
 
-const ChatRoomList = ({rooms, joinRoom}) => {
+const ChatRoomList = ({ rooms, joinRoom }) => {
     return (
         <div>
             <h2>
@@ -10,12 +10,12 @@ const ChatRoomList = ({rooms, joinRoom}) => {
             <ul>
                 {rooms.map((room,index) => (
                     <li key={index}>
-                        <button onClick={joinRoom(room)}>Join {room}</button>
+                        <button onClick={() => joinRoom(room)}>Join {room}</button>
                     </li>
                 ))}
             </ul>
         </div>
-    )
-}
+    );
+};
 
-export default ChatRoomList
+export default ChatRoomList;
