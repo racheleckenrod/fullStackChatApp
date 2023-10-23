@@ -21,7 +21,7 @@ function AppContent() {
             socket.connect();
 
             socket.on('connect', () => {
-                console.log('Connected to server');
+                console.log(`${username} Connected to server`);
             });
 
             socket.on('newMessage', (message) => {
@@ -29,7 +29,7 @@ function AppContent() {
             });
 
             socket.on('previousMessages', (previousMessages) => {
-                setMessages(previousMessages);
+                setMessages(previousMessages.reverse());
             });
         } else {
             socket.disconnect();
@@ -59,15 +59,22 @@ function AppContent() {
    };
 
    const handleLogout = () => {
+    console.log('logging out ...')
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     setIsAuthenticated(false);
     setToken(null);
     setUsername(null);
+    console.log('loggedout')
+    
     socket.disconnect();
+    console.log("after")
    };
 
    const joinRoom = (room) => {
+    if (currentRoom) {
+        socket.emit('leaveRoom', { room: currentRoom });
+    }
     setCurrentRoom(room); 
     socket.emit('joinRoom', {room});
    };
@@ -86,13 +93,13 @@ function AppContent() {
     <div className='App'>
         {isAuthenticated ? (
             <>
-            <span>Welcome, {username}</span>
+            <span>Welcome, {username} </span>
             <button onClick={handleLogout}>Logout</button>
             <ChatRoomList rooms={rooms} joinRoom={joinRoom}/>
             {currentRoom && (
                 <>
                 <h1>Current Room: {currentRoom}</h1>
-                <MessageList messages={messages} />
+                <MessageList messages={ messages } />
                 <MessageInput sendMessage={sendMessage} />
                 </>
             )}
