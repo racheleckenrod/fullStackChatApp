@@ -33,7 +33,7 @@ const SignupForm = ({onSignup}) => {
 <input
             type='email'
             placeholder='Email'
-            value={password}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             />
 
