@@ -9,7 +9,7 @@ export const AuthProvider = ({children}) => {
     const [username, setUsername] = useState(null);
 
     useEffect(() => {
-        // Retrieve token and username from local storafe
+        // Retrieve token and username from local storage
         const storedToken = localStorage.getItem('token')
         const storedUsername = localStorage.getItem('username')
 
@@ -37,7 +37,7 @@ export const AuthProvider = ({children}) => {
         >
             {children} {/* Render children components */}
         </AuthContext.Provider>
-    )    
+    );    
 
 
-}
+};
