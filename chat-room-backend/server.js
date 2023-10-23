@@ -31,9 +31,10 @@ mongoose.connect(mongoURI).then(() => {
 });
 
 io.on('connection', (socket) => {
-    console.log('New client connected');
+    console.log(`New client connected to websocket: ${socket.id}`);
     socket.on('joinRoom', async ({room}) => {
         socket.join(room);
+        console.log(`${socket.id} joined ${room}`)
 
         const messages = await Message.find({room})
         .sort({timestamp: -1})
@@ -64,6 +65,11 @@ io.on('connection', (socket) => {
         
     });
 
+    socket.on('leaveRoom', ({room }) => {
+        socket.leave(room);
+        console.log(`user left room: ${room}`);
+    });
+
 
     socket.on('disconnect', () => {
         console.log('Client disconnected');
@@ -73,6 +79,10 @@ io.on('connection', (socket) => {
 
 app.post('/register', async (req,res) => {
     const {username, email, password} = req.body;
+    const exsistingUser = await User.findOne({ username });
+    if (exsistingUser) {
+        return res.status(409).json({ error: 'Username already in use.'});
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({username, email, password: hashedPassword});
     await user.save();
