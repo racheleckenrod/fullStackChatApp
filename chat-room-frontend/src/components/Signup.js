@@ -1,43 +1,54 @@
-import React, {createContext, useState, useEffect} from "react";
+import React, { useState } from 'react';
 
-export const AuthContext = createContext()
+const SignupForm = ({onSignup}) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('')
 
-export const AuthProvider = ({children}) => {
-    // state variables
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [token, setToken] = useState(null);
-    const [username, setUsername] = useState(null);
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
-    useEffect(() => {
-        // Retrieve token and username from local storafe
-        const storedToken = localStorage.getItem('token')
-        const storedUsername = localStorage.getItem('username')
+        const response = await fetch('http://localhost:8000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({username, email, password}),
+        })
 
-        // If a token exsists in local storage, update state variables
-        if(storedToken) {
-            setToken(storedToken)
-            setIsAuthenticated(true)
-        }
+        const data = await response.json()
 
-        if (storedUsername) {
-            setUsername(storedUsername)
-        }
-    })
+        onSignup(data.token, data.username)
+    }
 
     return (
-        <AuthContext.Provider
-        value = {{
-            isAuthenticated,
-            setIsAuthenticated,
-            token,
-            setToken,
-            username,
-            setUsername
-        }}
-        >
-            {children} {/* Render children components */}
-        </AuthContext.Provider>
-    )    
+        <form onSubmit={handleSubmit}>
+            <input
+            type='text'
+            placeholder='Username'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            />
 
+<input
+            type='email'
+            placeholder='Email'
+            value={password}
+            onChange={(e) => setEmail(e.target.value)}
+            />
 
+            <input
+            type='password'
+            placeholder='Password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            />
+
+            
+
+            <button type='submit'>Sign Up</button>
+        </form>
+    )
 }
+
+export default SignupForm
