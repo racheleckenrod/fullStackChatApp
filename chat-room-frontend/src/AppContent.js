@@ -40,7 +40,7 @@ function AppContent() {
             socket.off('newMessage');
             socket.off('previousMessages');
         };
-    }, [isAuthenticated]);
+    }, [isAuthenticated, username]);
 
    const handleLogin = (token, username) => {
     localStorage.setItem('token', token);
@@ -60,15 +60,16 @@ function AppContent() {
 
    const handleLogout = () => {
     console.log('logging out ...')
+    setCurrentRoom(null);
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     setIsAuthenticated(false);
     setToken(null);
     setUsername(null);
-    console.log('loggedout')
-    
+    console.log('loggedout');
+    socket.emit('leaveRoom', { room: currentRoom });
     socket.disconnect();
-    console.log("after")
+    console.log("after");
    };
 
    const joinRoom = (room) => {

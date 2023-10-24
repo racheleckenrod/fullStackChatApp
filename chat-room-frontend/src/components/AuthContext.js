@@ -22,7 +22,7 @@ export const AuthProvider = ({children}) => {
         if (storedUsername) {
             setUsername(storedUsername);
         }
-    });
+    }, []);
 
     return (
         <AuthContext.Provider
